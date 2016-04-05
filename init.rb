@@ -12,6 +12,7 @@ end
 Rails.configuration.to_prepare do
   require_dependency 'project'
   require_dependency 'user'
+  require_dependency 'hooks/views_layouts_hook'
 
   User.send(:include, OauthProviderUserPatch)
 end
