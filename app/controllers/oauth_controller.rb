@@ -22,7 +22,11 @@ class OauthController < ApplicationController
       hash.delete(:hashed_password)
       hash.delete(:salt)
       hash.merge!(:mail => user.mail)
-      user_hash = { :user => hash }
+      hash[:roles] = {}
+      user.members.each do |m|
+        hash[:roles][m.project.identifier] = m.roles.map(&:name)
+      end
+      user_hash = { :user => hash  }
     end
     respond_to do |format|
       format.json { render :json => user_hash }
